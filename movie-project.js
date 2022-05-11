@@ -1,9 +1,15 @@
 
+ $( document ).ready(function() {
+    $(".loading-img").css("display", "none");
+    fetch(`https://lush-atom-arrhinceratops.glitch.me/movies`).then(data => console.log(data));
+});
 
 // TODO: Make an AJAX request to get a listing of all the movies
-$.get(`https://lush-atom-arrhinceratops.glitch.me/movies`).done(function(data) {
-    console.log(data);
-});
+// $.get(`https://lush-atom-arrhinceratops.glitch.me/movies`).done(function(data) {
+//     console.log(data);
+// });
+
+
 
 // TODO:
 //  On page load:
