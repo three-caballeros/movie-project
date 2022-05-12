@@ -18,13 +18,21 @@ const url = 'https://lush-atom-arrhinceratops.glitch.me/movies';
 //         makeTable(data);
 // });
 
-fetch(url).then(response => { response.json()
-        .then( result => {
-            console.log("json object: ", result);
-            makeTable(result);
-        })
+//define in a function get all movies
+// call it in a document.ready to render on page initially
+// call it again after successful post
+function getMovies() {
+    fetch(url).then(response => {
+        response.json()
+            .then(result => {
+                console.log("Render Movies: ", result);
+                makeTable(result);
+            })
     })
-    .catch(error => console.error(error));
+        .catch(error => console.error(error));
+};
+
+$(document).ready(getMovies());
 
 $('button').click(function(e) {
     e.preventDefault();
@@ -38,24 +46,8 @@ $('button').click(function(e) {
         },
         body: JSON.stringify(newMoviePost),
     };
-    fetch(url, options)
-        .then( success => console.log("post successful: ", success))
-        // .then(
-        //     fetch(url).then(response => { response.json()
-        //         .then( result => {
-        //             console.log("update table: ", result);
-        //             makeTable(result);
-        //         })
-        //     }))
-    setTimeout(() => {
-            fetch(url).then(response => { response.json()
-                .then( result => {
-                    console.log("update table: ", result);
-                    makeTable(result);
-                })
-            })
-    },1600);
-        });
+    fetch(url, options).then( success => getMovies());
+});
 
 function makeTable(response) {
     let html = "<tr>";
