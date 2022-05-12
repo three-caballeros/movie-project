@@ -1,14 +1,17 @@
 setTimeout(() => {
-    $(".loading-img").css("display", "none");
-    $.get(`https://rune-antique-telephone.glitch.me/movies`).done(function(data) {
+    $(".loader").css("display", "none");
+    
+},1600);
+
+setTimeout(() => {
+    element = document.querySelector(".container");
+    element.style.visibility = 'visible';
+ },1600);
+
+$.get(`https://rune-antique-telephone.glitch.me/movies`).done(function(data) {
         console.log(data);
-}
-    );
-},1200);
-
-
-
-
+});
+    
 
 
 
