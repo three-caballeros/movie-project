@@ -32,6 +32,13 @@ function getMovies() {
         .catch(error => console.error(error));
 };
 
+function getMoviesObject() {
+    fetch(url).then(response => {
+        response.json()})
+            .then(result)
+        .catch(error => console.error(error));
+}
+
 $(document).ready(getMovies());
 
 $('button').click(function(e) {
@@ -49,21 +56,47 @@ $('button').click(function(e) {
     fetch(url, options).then( success => getMovies());
 });
 
+
+ var movieObject = getMoviesObject();
+console.log(movieObject);
+
 function makeTable(response) {
     let html = "<tr>";
     for (var i = 0; i < response.length; i++) {
         html += '<th scope="row">' + response[i].id + '</th>';
-        // html += `<td><img src=${response[i].poster}></td>`;
+        html += `<td></td>`;
         html += '<td>' + response[i].title + '</td>">';
         html += '<td>' + response[i].genre + '</td>">';
         html += '<td>' + response[i].year + '</td>">';
         html += '<td>' + response[i].rating + '</td>">';
         html += '<td>' + response[i].plot + '</td>">';
+        html += '<td><button type="button" id="delete" class="btn btn-danger btn-floating"><i class="fas fa-magic"></i></button></td>">';
         html += "</tr>";
     };
     $('tbody').html(html); //innerHTML change
 };
 
+// $('#delete').click(function(e) {
+//     e.preventDefault();
+//
+//     // const edit = {
+//     //     method: 'DELETE',
+//     //     headers: {
+//     //         'Content-Type': 'application/json',
+//     //     },
+//     //     body: JSON.stringify(newMoviePost),
+//     // };
+//     // fetch(url, edit).then( success => getMovies());
+//
+//     fetch(`url${movieObject}`,{
+//         method:'DELETE'
+//     }).then(response=>{
+//         return response.json()
+//     }).then(data=>
+// // this is the data we get after putting our data,
+//             console.log(data)
+//     );
+//
 
 //  On page load:
 //      Display a "loading..." message
