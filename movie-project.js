@@ -11,6 +11,7 @@ setTimeout(() => {
 
 $.get(`https://rune-antique-telephone.glitch.me/movies`).done(function(data) {
         console.log(data);
+        makeTable(data);
 });
 
     $('button').click(function(e) {
@@ -35,19 +36,15 @@ $.get(`https://rune-antique-telephone.glitch.me/movies`).done(function(data) {
 });
 
 function makeTable(response) {
-    for (var i = 0; i < 10 ; i++) {
-        let html = '<th scope="row">' + response[i].id + '</th>';
-        html += '<td>' + response[i].poster + '</td>';
-        // html += '<ul class="list-group list-group-flush">';
-        // html += '<li class="list-group-item text-center"><div>' + maxTempArr[i]+ 'F / ' + minTempArr[i] + 'F ' + '</div><img src="http://openweathermap.org/img/w/' + wxIconArr[i] +'.png"></li>'; //max temp
-        // html += '<li class="list-group-item text-center">' + wxDescArr[i] +  '</li>'; // cloud cond
-        // html += '<li class="list-group-item text-center">' + cloudArr[i] +  '</li>'; // cloud cond
-        // html += '<li class="list-group-item text-center">' + 'Humidity: ' + maxHumidityArr[i] + '%'+'</li>'; //humidity
-        // html += '<li class="list-group-item text-center">' + 'Wind: ' + maxWind[i] + 'mph'+'</li>'; //wind
-        // html += '<li class="list-group-item text-center">' + 'Pressure: ' + maxPressureArr[i] +'bar'+'</li>'; //pressure
-        // html += '</ul>';
-        // html += '</div>';
-        $('tbody').html(html);
+    for (var i = 0; i < response.length ; i++) {
+        let html = "<tr>";
+            html += '<th scope="row">' + response[i].id + '</th>';
+        html += `<td><img src=${response[i].poster}></td>`;
+        html += '<td>' + response[i].title + '</td>">';
+        html += '<td>' + response[i].genre + '</td>">';
+        html += '<td>' + response[i].year + '</td>">';
+        html += "</tr>";
+        $('tbody').append(html); //innerHTML change
     };
 };
 
