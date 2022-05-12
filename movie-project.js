@@ -1,13 +1,16 @@
+setTimeout(() => {
+    $(".loader").css("display", "none");
+    
+},1600);
 
- $( document ).ready(function() {
-    $(".loading-img").css("display", "none");
-    fetch(`https://lush-atom-arrhinceratops.glitch.me/movies`).then(data => console.log(data));
+setTimeout(() => {
+    element = document.querySelector(".container");
+    element.style.visibility = 'visible';
+ },1600);
+
+$.get(`https://rune-antique-telephone.glitch.me/movies`).done(function(data) {
+        console.log(data);
 });
-
-// TODO: Make an AJAX request to get a listing of all the movies
-// $.get(`https://lush-atom-arrhinceratops.glitch.me/movies`).done(function(data) {
-//     console.log(data);
-// });
 
 
 
