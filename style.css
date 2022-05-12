@@ -1,0 +1,31 @@
+.container{
+    visibility: hidden;
+}
+.loader{
+    display: flex;
+    
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 50vh;
+    letter-spacing: 3px;
+    background-color: rgba(49, 0, 139, 0.219);
+    color: white;
+    width: fit-content;
+    padding: 6px;
+    border-radius: 8px;
+    animation: loadingAnimations 1s infinite;
+}
+@keyframes loadingAnimations {
+    0%{
+        transform: scale(1);
+        box-shadow: 0 0 1px 1px rgba(0, 0, 255, 0.312);
+    }
+    50%{
+        transform: scale(1.3);
+        box-shadow: 0 0 7px 7px blue;
+    }
+    100%{
+        transform: scale(1);
+        box-shadow: 0 0 1px 1px rgba(0, 0, 255, 0.238);
+    }
+}
