@@ -2,10 +2,10 @@
 // TODO: On page load, display loading message. When request comes back, replace loading message with HTML & data.
 setTimeout(() => {
     $(".loader").css("display", "none");
-    element = document.querySelector("#table-container");
-    element.style.visibility = 'visible';
-    element = document.querySelector("#header-img");
-    element.style.visibility = 'visible';
+    let element1 = document.querySelector("#table-container");
+    element1.style.visibility = 'visible';
+    let element2 = document.querySelector("#header-img");
+    element2.style.visibility = 'visible';
 },1600);
 
 // URL variable used for multiple fetch requests
@@ -169,3 +169,8 @@ $(document).on('click', '.btn-success', function(e) {
     let deleteURL = url + "/" + uniqueID.substring(7, uniqueID.length);
     fetch(deleteURL, patchOption).then( success => getMovies());
 })
+
+$(document).ready(function () {
+    $('#dt-sort').DataTable();
+    $('.dataTables_length').addClass('bs-select');
+});
