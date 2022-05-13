@@ -52,7 +52,7 @@ function makeTableEdits(response) {
     let edits = "<tr>";
     response.forEach((obj) => {
         edits += `<th id="${obj.id}" scope="row"><form><textarea style="overflow-wrap: normal" class="form-control" placeholder="${obj.id}"></textarea></form></th>`;
-        edits += `<td id="poster-${obj.id}></td>`;
+        edits += `<td id="poster-${obj.id}"></td>`;
         edits += `<td id="title-${obj.id}" ><form><textarea style="overflow-wrap: normal" class="form-control" placeholder="${obj.title}"></textarea></form></td>`;
         edits += `<td id="genre-${obj.id}" ><form><textarea style="overflow-wrap: normal" class="form-control" placeholder="${obj.genre}"></textarea></form></td>`;
         edits += `<td id="year-${obj.id}" ><form><textarea style="overflow-wrap: normal" class="form-control text-center" placeholder="${obj.year}"></textarea></form></td>`
