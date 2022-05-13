@@ -10,24 +10,27 @@
 
 
 </head>
-<body>
+<body class="bg-light">
         <div id="loading">
-            <!-- <img class="loading-img" id="loading-image" src="../images/loading.png" alt="Loading..." /> -->
             <div class="loader" id="load">Loading...</div>
         </div>
 
-        <div class="container">
+         <div class="container" id="header-img">
+             <img src="../images/movie-header.jpg" class="w-100">
+         </div>
+
+        <div class="container" id="table-container">
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">ID #</th>
-                        <th scope="col">Poster</th>
-                        <th scope="col">Movie Title</th>
-                        <th scope="col">Genre</th>
-                        <th scope="col">Year</th>
-                        <th scope="col">Rating</th>
-                        <th scope="col">Plot</th>
-                        <th scope="col">Edit</th>
+                        <th scope="col" class="text-center">ID #</th>
+                        <th scope="col" class="text-center">Poster</th>
+                        <th scope="col" class="text-center">Movie Title</th>
+                        <th scope="col" class="text-center">Genre</th>
+                        <th scope="col" class="text-center">Year</th>
+                        <th scope="col" class="text-center">Rating</th>
+                        <th scope="col" class="text-center">Plot</th>
+                        <th scope="col" class="text-center">More</th>
                     </tr>
                 </thead>
                 <tbody></tbody> <!-- Insert movie list here with JS-->
@@ -39,7 +42,7 @@
             <input type="text" id="movie-title" placeholder="Movie Title">
             <label for="movie-rating">Rating:</label>
             <input type="text" id="movie-rating" placeholder="1 to 100">
-            <button type="submit" id="add-movie" class="btn btn-primary">Submit</button>
+            <button type="submit" id="add-movie" class="btn btn-success">Submit</button>
         </form>
     </div>
 
