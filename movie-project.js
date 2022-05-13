@@ -28,9 +28,10 @@ $(document).ready(getMovies());
 function makeTable(response) {
     let html = "";
     response.forEach((obj) => {
+        console.log(obj);
         html += `<tr id="row-${obj.id}"> `
         html += '<td>' + obj.id + '</td>';
-        html += `<td></td>`;
+        html += `<td><img src="${obj.poster}"></td>`;
         html += '<td>' + obj.title + '</td>">';
         html += '<td>' + obj.genre + '</td>">';
         html += '<td class="text-center">' + obj.year + '</td>">';
@@ -70,7 +71,7 @@ function makeRowEdits(num, arr) {
         if (obj.id === parseInt(num)) {
             let edits = "";
             edits += `<td><form><textarea id="${num}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.id}">${obj.id}</textarea></form></td>`;
-            edits += `<td><form><textarea id="poster-${num}" style="overflow-wrap: normal" class="form-control" ></textarea></form></td>`;
+            edits += `<td><form><textarea id="poster-${num}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.poster}">${obj.poster}</textarea></form></td>`;
             edits += `<td><form><textarea id="title-${num}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.title}">${obj.title}</textarea></form></td>`;
             edits += `<td><form><textarea id="genre-${num}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.genre}">${obj.genre}</textarea></form></td>`;
             edits += `<td><form><textarea id="year-${num}" style="overflow-wrap: normal" class="form-control text-center" placeholder="${obj.year}">${obj.year}</textarea></form></td>`
@@ -154,6 +155,7 @@ $(document).on('click', '.btn-success', function(e) {
         plot: $(`#plot-${editID}`).val(),
         poster: $(`#poster-${editID}`).val(),
         title: $(`#title-${editID}`).val(),
+        year: $(`#year-${editID}`).val(),
         rating: $(`#rating-${editID}`).val()
     };
     console.log(editMoviePost);
