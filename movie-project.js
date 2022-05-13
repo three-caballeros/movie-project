@@ -28,7 +28,7 @@ $(document).ready(getMovies());
 function makeTable(response) {
     let html = "<tr>";
     response.forEach((obj) => {
-        html += '<th scope="row">' + obj.id + '</th>';
+        html += '<th scope="row">' + obj.id + '</th scope="row">';
         html += `<td></td>`;
         html += '<td>' + obj.title + '</td>">';
         html += '<td>' + obj.genre + '</td>">';
@@ -36,13 +36,37 @@ function makeTable(response) {
         html += '<td class="text-center">' + obj.rating + '</td>">';
         html += '<td>' + obj.plot + '</td>">';
         html += `<td>
-                    <button type="button" id="${obj.id}" class="btn btn-primary mb-1 w-100">Edit</button>
-                    <button type="button" id="${obj.id}" class="btn btn-danger w-100">Delete</button>
+                    <button type="button" id="edit-${obj.id}" class="btn btn-primary mb-1 w-100">Edit</button>
+                    <button type="button" id="delete-${obj.id}" class="btn btn-danger w-100">Delete</button>
                  </td>`;
         html += "</tr>";
     });
     $('tbody').html(html); //innerHTML change
 };
+
+//add a textarea box to each column in the row
+//include the existing content in each textarea
+// change edit button text to "Submit"
+
+function makeTableEdits(response) {
+    let edits = "<tr>";
+    response.forEach((obj) => {
+        edits += `<th id="${obj.id}" scope="row"><form><textarea style="overflow-wrap: normal" class="form-control" placeholder="${obj.id}"></textarea></form></th>`;
+        edits += `<td id="poster-${obj.id}></td>`;
+        edits += `<td id="title-${obj.id}" ><form><textarea style="overflow-wrap: normal" class="form-control" placeholder="${obj.title}"></textarea></form></td>`;
+        edits += `<td id="genre-${obj.id}" ><form><textarea style="overflow-wrap: normal" class="form-control" placeholder="${obj.genre}"></textarea></form></td>`;
+        edits += `<td id="year-${obj.id}" ><form><textarea style="overflow-wrap: normal" class="form-control text-center" placeholder="${obj.year}"></textarea></form></td>`
+        edits += `<td id="rating-${obj.id}" ><form><textarea style="overflow-wrap: normal" class="form-control text-center" placeholder="${obj.rating}"></textarea></form></td>`
+        edits += `<td id="plot-${obj.id}" ><form><textarea style="overflow-wrap: normal" class="form-control" placeholder="${obj.plot}"></textarea></form></td>`;
+        edits += `<td>
+                    <button type="button" id="submit-${obj.id}" class="btn btn-primary mb-1 w-100">Submit</button>
+                    <button type="button" id="delete-${obj.id}" class="btn btn-danger w-100">Delete</button>
+                 </td>`;
+        edits += "</tr>";
+    });
+    $('tbody').html(edits);
+};
+
 
 
 // TODO: When the form is submitted, the page should not reload / refresh, instead, your javascript
@@ -77,7 +101,7 @@ $(document).on('click', '.btn-danger', function(e){
             'Content-Type': 'application/json',
         },
     };
-    let deleteURL = url + "/" + uniqueID;
+    let deleteURL = url + "/" + uniqueID.substring(7, uniqueID.length);
     fetch(deleteURL, deleteOption).then( success => getMovies());
 });
 
@@ -96,12 +120,19 @@ $(document).on('click', '.btn-primary', function(e){
     // TODO: Edit button should convert to a Submit button
     // TODO: Capture the data from all of the new forms in each column
     // TODO: Check the PATCH request below to ensure the newly captured data is being sent to the database.
-    const patchOption = {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    let patchURL = url + "/" + uniqueID;
-    fetch(patchURL, patchOption).then( success => getMovies());
-});
+    fetch(url).then(response => {response.json()
+        .then(result => {
+            console.log("Render Movies: ", result);
+            makeTableEdits(result);
+        })
+    }) .catch(error => console.error(error));
+}
+    // const patchOption = {
+    //     method: 'PATCH',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    // };
+    // let patchURL = url + "/" + uniqueID;
+    // fetch(patchURL, patchOption).then( success => getMovies());
+);
