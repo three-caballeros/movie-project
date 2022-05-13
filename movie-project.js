@@ -49,9 +49,10 @@ function makeTable(response) {
 // change edit button text to "Submit"
 
 function makeTableEdits(response) {
-    let edits = "<tr>";
+    let edits = "";
     response.forEach((obj) => {
-        edits += `<th  scope="row"><form><textarea id="${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.id}"></textarea></form></th>`;
+        edits += `<tr id="row-${obj.id}">`;
+        edits += `<td  scope="row"><form><textarea id="${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.id}"></textarea></form></td>`;
         edits += `<td><form><textarea id="poster-${obj.id}" style="overflow-wrap: normal" class="form-control" ></textarea></form></td>`;
         edits += `<td><form><textarea id="title-${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.title}"></textarea></form></td>`;
         edits += `<td ><form><textarea id="genre-${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.genre}"></textarea></form></td>`;
@@ -66,8 +67,6 @@ function makeTableEdits(response) {
     });
     $('tbody').html(edits);
 };
-
-
 
 // TODO: When the form is submitted, the page should not reload / refresh, instead, your javascript
 //  should make a POST request to /movies with the information the user put into the form.
@@ -106,20 +105,9 @@ $(document).on('click', '.btn-danger', function(e){
 });
 
 
-// =============== REQUIRED ACTION ITEMS REMAINING ==========================
-//  TODO: Allow users to edit existing movies
-//      Give users the option to edit an existing movie
-//      A form should be pre-populated with the selected movie's details
-//      Like creating a movie, this should not involve any page reloads, instead your javascript code should make an ajax request when the form is submitted.
-// =============== REQUIRED ACTION ITEMS REMAINING ==========================
-
 $(document).on('click', '.btn-primary', function(e) {
     e.preventDefault();
     let uniqueID = $(e.target).attr("id");
-    // TODO: Need a fn like makeTable that creates text boxes populated with current movie content in the row that the edit button was clicked
-    // TODO: Edit button should convert to a Submit button
-    // TODO: Capture the data from all of the new forms in each column
-    // TODO: Check the PATCH request below to ensure the newly captured data is being sent to the database.
     fetch(url).then(response => {
         response.json()
             .then(result => {
@@ -127,16 +115,7 @@ $(document).on('click', '.btn-primary', function(e) {
                 makeTableEdits(result);
             })
     }).catch(error => console.error(error));
-}
-    // const patchOption = {
-    //     method: 'PATCH',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    // };
-    // let patchURL = url + "/" + uniqueID;
-    // fetch4(patchURL, patchOption).then( success => getMovies());
-);
+});
 
 
 $(document).on('click', '.btn-success', function(e) {
