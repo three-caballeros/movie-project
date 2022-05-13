@@ -39,7 +39,7 @@ function makeTable(response) {
         html += '<td>' + obj.year + '</td>">';
         html += '<td>' + obj.rating + '</td>">';
         html += '<td>' + obj.plot + '</td>">';
-        html += '<td><button type="button" id="delete" class="btn btn-danger">Delete</button></td>">';
+        html += `<td><button type="button" id="delete${obj.id}" class="btn btn-danger">Delete</button></td>`;
         html += "</tr>";
     });
     $('tbody').html(html); //innerHTML change
@@ -48,7 +48,7 @@ function makeTable(response) {
 // TODO: When the form is submitted, the page should not reload / refresh, instead, your javascript
 //  should make a POST request to /movies with the information the user put into the form.
 // On button click, capture user provided movie info, post in database, and call function to render HTML w/ new input
-$('button').click((e) => {
+$('#add-movie').click((e) => {
     e.preventDefault();
     const newMoviePost = {title: $('#movie-title').val(), rating: $('#movie-rating').val()};
     const options = {
@@ -59,14 +59,37 @@ $('button').click((e) => {
         body: JSON.stringify(newMoviePost),
     };
     fetch(url, options).then( success => getMovies());
+    document.getElementById("new-movie-form").reset();
 });
 
 
 // TODO: Each movie needs a delete button that when clicked, a DELETE request is sent to the database
 //
-$(`'#delete${uniqueID}'`).click(function(e) {
+
+// $(".btn-danger").on("click", ".btn-danger", function(e){
+//     e.preventDefault();
+//     console.log("clicked");
+//     let uniqueID = $(e.target.attr("id"));
+//     console.log(uniqueID);
+// });
+
+$(document).on('click', '.btn-danger', function(e){
     e.preventDefault();
+    console.log("clicked");
+    let uniqueID = $(e.target).attr("id");
+    console.log(uniqueID);
 });
+// $('btn-danger').click(function(e) {
+//     e.preventDefault();
+//     console.log("clicked");
+//     let uniqueID = $(e.target.attr("id"));
+//     console.log(uniqueID);
+// });
+
+
+
+
+
 // var id = $(e.target.attr('id);' +
 //     deleteMovies() +
 //     '))
@@ -79,14 +102,14 @@ $(`'#delete${uniqueID}'`).click(function(e) {
     // };
     // fetch(url, edit).then( success => getMovies());
 
-    fetch(`url${movieObject}`,{
-        method:'DELETE'
-    }).then(response=>{
-        return response.json()
-    }).then(data=>
-// this is the data we get after putting our data,
-            console.log(data)
-    );
+//     fetch(`url${movieObject}`,{
+//         method:'DELETE'
+//     }).then(response=>{
+//         return response.json()
+//     }).then(data=>
+// // this is the data we get after putting our data,
+//             console.log(data)
+//     );
 
 
 
