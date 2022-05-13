@@ -4,7 +4,7 @@ setTimeout(() => {
     $(".loader").css("display", "none");
     element = document.querySelector("#table-container");
     element.style.visibility = 'visible';
-    element = document.querySelector(".navbar");
+    element = document.querySelector("#header-img");
     element.style.visibility = 'visible';
 },1600);
 
