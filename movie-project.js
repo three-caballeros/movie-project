@@ -26,9 +26,10 @@ $(document).ready(getMovies());
 
 // Function converts array of Objs (w/ movie info) into HTML table
 function makeTable(response) {
-    let html = "<tr>";
+    let html = "";
     response.forEach((obj) => {
-        html += '<th scope="row">' + obj.id + '</th scope="row">';
+        html += `<tr id="row-${obj.id}"> `
+        html += '<td>' + obj.id + '</td>';
         html += `<td></td>`;
         html += '<td>' + obj.title + '</td>">';
         html += '<td>' + obj.genre + '</td>">';
@@ -44,20 +45,17 @@ function makeTable(response) {
     $('tbody').html(html); //innerHTML change
 };
 
-//add a textarea box to each column in the row
-//include the existing content in each textarea
-// change edit button text to "Submit"
-
 function makeTableEdits(response) {
-    let edits = "<tr>";
+    let edits = "";
     response.forEach((obj) => {
-        edits += `<th  scope="row"><form><textarea id="${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.id}"></textarea></form></th>`;
+        edits += `<tr id="row-${obj.id}">`;
+        edits += `<td><form><textarea id="${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.id}"></textarea></form></td>`;
         edits += `<td><form><textarea id="poster-${obj.id}" style="overflow-wrap: normal" class="form-control" ></textarea></form></td>`;
         edits += `<td><form><textarea id="title-${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.title}"></textarea></form></td>`;
-        edits += `<td ><form><textarea id="genre-${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.genre}"></textarea></form></td>`;
-        edits += `<td ><form><textarea id="year-${obj.id}" style="overflow-wrap: normal" class="form-control text-center" placeholder="${obj.year}"></textarea></form></td>`
-        edits += `<td ><form><textarea id="rating-${obj.id}" style="overflow-wrap: normal" class="form-control text-center" placeholder="${obj.rating}"></textarea></form></td>`
-        edits += `<td ><form><textarea id="plot-${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.plot}"></textarea></form></td>`;
+        edits += `<td><form><textarea id="genre-${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.genre}"></textarea></form></td>`;
+        edits += `<td><form><textarea id="year-${obj.id}" style="overflow-wrap: normal" class="form-control text-center" placeholder="${obj.year}"></textarea></form></td>`
+        edits += `<td><form><textarea id="rating-${obj.id}" style="overflow-wrap: normal" class="form-control text-center" placeholder="${obj.rating}"></textarea></form></td>`
+        edits += `<td><form><textarea id="plot-${obj.id}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.plot}"></textarea></form></td>`;
         edits += `<td>
                     <button type="button" id="submit-${obj.id}" class="btn btn-success submit-btn mb-1 w-100">Submit</button>
                     <button type="button" id="delete-${obj.id}" class="btn btn-danger w-100">Delete</button>
@@ -65,9 +63,30 @@ function makeTableEdits(response) {
         edits += "</tr>";
     });
     $('tbody').html(edits);
+}; //fn allows for editing entire db but only permits submitting edits for 1 movie at a time.
+
+function makeRowEdits(num, arr) {
+    arr.forEach((obj) => {
+        if (obj.id === parseInt(num)) {
+            let edits = "";
+            edits += `<td><form><textarea id="${num}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.id}">${obj.id}</textarea></form></td>`;
+            edits += `<td><form><textarea id="poster-${num}" style="overflow-wrap: normal" class="form-control" ></textarea></form></td>`;
+            edits += `<td><form><textarea id="title-${num}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.title}">${obj.title}</textarea></form></td>`;
+            edits += `<td><form><textarea id="genre-${num}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.genre}">${obj.genre}</textarea></form></td>`;
+            edits += `<td><form><textarea id="year-${num}" style="overflow-wrap: normal" class="form-control text-center" placeholder="${obj.year}">${obj.year}</textarea></form></td>`
+            edits += `<td><form><textarea id="rating-${num}" style="overflow-wrap: normal" class="form-control text-center" placeholder="${obj.rating}">${obj.rating}</textarea></form></td>`
+            edits += `<td><form><textarea id="plot-${num}" style="overflow-wrap: normal" class="form-control" placeholder="${obj.plot}">${obj.plot}</textarea></form></td>`;
+            edits += `<td>
+                    <button type="button" id="submit-${num}" class="btn btn-success submit-btn mb-1 w-100">Submit</button>
+                    <button type="button" id="delete-${num}" class="btn btn-danger w-100">Delete</button>
+                 </td>`;
+            let select = 'row-' + num;
+            $(`#${select}`).html(edits);
+        } else {
+            return false;
+        }
+    });
 };
-
-
 
 // TODO: When the form is submitted, the page should not reload / refresh, instead, your javascript
 //  should make a POST request to /movies with the information the user put into the form.
@@ -87,7 +106,6 @@ $('#add-movie').click((e) => {
     document.getElementById("new-movie-form").reset();
 });
 
-
 // TODO: Each movie needs a delete button that when clicked, a DELETE request is sent to the database
 // Needed to create an event delegation since Delete button was created dynamically
 // Upon click, capture the id value from the element, append the id to the url and submit a DELETE fetch request
@@ -106,43 +124,30 @@ $(document).on('click', '.btn-danger', function(e){
 });
 
 
-// =============== REQUIRED ACTION ITEMS REMAINING ==========================
-//  TODO: Allow users to edit existing movies
-//      Give users the option to edit an existing movie
-//      A form should be pre-populated with the selected movie's details
-//      Like creating a movie, this should not involve any page reloads, instead your javascript code should make an ajax request when the form is submitted.
-// =============== REQUIRED ACTION ITEMS REMAINING ==========================
-
 $(document).on('click', '.btn-primary', function(e) {
     e.preventDefault();
-    let uniqueID = $(e.target).attr("id");
-    // TODO: Need a fn like makeTable that creates text boxes populated with current movie content in the row that the edit button was clicked
-    // TODO: Edit button should convert to a Submit button
-    // TODO: Capture the data from all of the new forms in each column
-    // TODO: Check the PATCH request below to ensure the newly captured data is being sent to the database.
+    let uniqueID = $(e.target).attr("id")
+    console.log(uniqueID);
+    let uniqueNum = uniqueID.substring(5, uniqueID.length);
+    console.log(uniqueNum);
     fetch(url).then(response => {
         response.json()
             .then(result => {
                 console.log("Render Movies: ", result);
-                makeTableEdits(result);
+                // makeTableEdits(result); //rowID goes here instead of results?
+                makeRowEdits(uniqueNum, result);
             })
     }).catch(error => console.error(error));
-}
-    // const patchOption = {
-    //     method: 'PATCH',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    // };
-    // let patchURL = url + "/" + uniqueID;
-    // fetch4(patchURL, patchOption).then( success => getMovies());
-);
+});
 
+// Submit btn (success-btn) reveals upon 1st click of edit
+// This submit button captures info from textareas and PATCH (fetch) requests to database
+// the initial function to render the table with current db info is invoked at the end of this click event
 
 $(document).on('click', '.btn-success', function(e) {
     e.preventDefault();
     let uniqueID = $(e.target).attr("id");
-    let editID = uniqueID.substring(7, uniqueID.length);
+    let editID = uniqueID.substring(7, uniqueID.length); //edit substring!
     const editMoviePost = {
         genre: $(`#genre-${editID}`).val(),
         id: $(`#id-${editID}`).val(),
